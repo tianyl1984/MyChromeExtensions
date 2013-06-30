@@ -1,0 +1,35 @@
+{
+	"name": "MyChromeExtensions",
+	"version": "0.1",
+	"manifest_version": 2,
+	"description": "MyChromeExtensions",
+	"default_locale": "zh_CN",
+	"browser_action": {
+		"default_icon": "/images/icon.png",
+		"default_popup": "popup.html",
+		"default_title": "我的chrome插件"
+	},
+	"background": {
+		"scripts":["js/background.js"]
+	},
+	"options_page": "options.html",
+	"permissions": [
+		"tabs",
+		"browsingData",
+		"https://*/",
+		"http://*//"
+	],
+	"content_scripts":[
+		{
+			"all_frames": true,
+			"matches": ["\u003Call_urls\u003E"],
+			"js": ["js/jquery-1.7.1.min.js","js/gestures.js","js/googleSearch.js","js/weibo.js"],
+			"run_at" : "document_idle"
+		}
+	],
+	"icons": {
+		"16": "images/icon.png",
+        "48": "images/icon.png",
+        "128": "images/icon.png"
+    }
+}
