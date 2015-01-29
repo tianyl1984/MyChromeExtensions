@@ -15,7 +15,8 @@ function Point(x,y){
 
 //鼠标移动
 document.onmousemove = function(event){
-	if(!isStart){
+	var tt = new Date().getTime();
+	if(!isStart || (downTime > 0 && (tt - downTime < 30))){
 		return true;
 	}else{
 		if(context == null){
@@ -85,6 +86,7 @@ document.onmousemove = function(event){
 //右键
 document.oncontextmenu = function(event){
 	var rtnValue = showContextmenu;
+	console.log(hasDraw + ":" + result);
 	if(hasDraw){
 		showContextmenu = true;
 		x = 0;
@@ -115,13 +117,17 @@ document.oncontextmenu = function(event){
 //鼠标抬起
 document.onmouseup = function(event){
 	if(event.button == 2){
-		isStart = false;	
+		downTime = -1;
+		isStart = false;
 	}
 	return true;
 }
+//按下时间
+var downTime = -1;
 //鼠标按下
 document.onmousedown = function(event){
 	if(event.button == 2){
+		downTime = new Date().getTime();
 		isStart = true;
 	}
 	return true;
