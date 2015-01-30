@@ -1,25 +1,26 @@
-if(window.location.href.indexOf("https://www.google.com.hk/") != -1){
-	//禁止转向google网站，经常无法访问
-//	$(".g").live("mouseover",function(e){
-//		var $a = $(this).find("a:eq(0)");
-//		if($a.attr("data-href")){
-//			$a.attr("href",$a.attr("data-href"));
-//			$a.removeAttr("data-href");
-//		}
-//		//$a.hide();
-//		$a.removeAttr("onmousedown");
-//		$a.unbind("mousedown");
-//		
-//		$a.bind("mousedown",function(evt){
-//			evt.stopPropagation();
-//			evt.preventDefault();
-//		});
-//	});
-	
-}else{
-	//alert("bad");
-}
 
-//chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
-//	alert(changeInfo.url);
-//});
+(function() {
+
+    if (!/^https?:\/\/\w*.google.com(?:\.[a-z]+)?/.test(location.href)) {
+        return;
+    }
+    
+    function removeMouseDown(){
+    	var as = document.getElementsByClassName("r");
+    	for (var i = 0, len = as.length; i < len; i++) {
+    		var thisA = as[i].getElementsByTagName("a")[0];
+    		if (/^return rwt\(.+\)$/.test(thisA.getAttribute("onmousedown"))) {
+    			thisA.removeAttribute("onmousedown");
+    			if(thisA.getAttribute("data-href")){
+    				thisA.setAttribute("href",thisA.getAttribute("data-href"));
+    			}
+    			$(thisA).after($(thisA).clone());
+    			$(thisA).remove();
+    		}
+    	}
+    }
+    
+    removeMouseDown();
+    
+    document.addEventListener("DOMNodeInserted", removeMouseDown, false);
+})()

@@ -76,17 +76,3 @@ setInterval(function(){
 	chrome.browsingData.remove({"since": 0}, {"downloads": true});
 }, 5000);
 
-chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
-	if(changeInfo.url && changeInfo.url.indexOf("https://www.google.com.hk/url") != -1){
-		var url = changeInfo.url;
-		var trueUrl = decodeURIComponent(url.replace(/.*&url=/,'').replace(/&ei=.*/,''));
-		if(trueUrl.indexOf("http") != 0){
-			console.log("解析url错误");
-		}else{
-			chrome.tabs.update(tabId,{url:trueUrl},function(){
-				console.log("OK!!!!!!");
-			});
-		}
-	}
-	console.log(changeInfo.url);
-});
