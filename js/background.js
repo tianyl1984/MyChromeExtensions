@@ -76,3 +76,18 @@ setInterval(function(){
 	chrome.browsingData.remove({"since": 0}, {"downloads": true});
 }, 5000);
 
+//地址栏显示图标
+chrome.runtime.onInstalled.addListener(function() {
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+    chrome.declarativeContent.onPageChanged.addRules([
+      {
+        conditions: [
+          new chrome.declarativeContent.PageStateMatcher({
+            pageUrl: { schemes:['https','http'] },
+          })
+        ],
+        actions: [ new chrome.declarativeContent.ShowPageAction() ]
+      }
+    ]);
+  });
+});

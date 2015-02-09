@@ -4,16 +4,17 @@
 	"manifest_version": 2,
 	"description": "MyChromeExtensions",
 	"default_locale": "zh_CN",
-	"browser_action": {
+	"page_action": {
 		"default_icon": "/images/icon.png",
-		"default_popup": "popup.html",
-		"default_title": "我的chrome插件"
+		"default_popup": "qrcode.html",
+		"default_title": "查看二维码"
 	},
 	"background": {
 		"scripts":["js/background.js"]
 	},
 	"options_page": "options.html",
 	"permissions": [
+		"declarativeContent",
 		"tabs",
 		"browsingData",
 		"https://*/",
